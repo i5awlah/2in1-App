@@ -1,10 +1,8 @@
 package com.example.a2in1app
 
 import android.content.Context
-import android.content.DialogInterface
 import android.content.Intent
 import android.content.SharedPreferences
-import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
@@ -12,7 +10,6 @@ import android.view.MenuItem
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
-import androidx.appcompat.app.AlertDialog
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -168,7 +165,7 @@ class GuessPhrase : AppCompatActivity() {
                     messages.add("You got it!")
                     disableEntry()
                     saveSharedPreferences(10-count)
-                    showAlert("You win!\n\nPlay again?")
+                    CustomAlert(this, "You win!\n\nPlay again?")
                 }
                 else {
                     messages.add("Wrong guess: $userGuess")
@@ -245,7 +242,7 @@ class GuessPhrase : AppCompatActivity() {
         if(myAnswer==phrase){
             disableEntry()
             saveSharedPreferences(10-count)
-            showAlert("You win!\n\nPlay again?")
+            CustomAlert(this,"You win!\n\nPlay again?")
         }
         if(guessedLetters.isEmpty()){guessedLetters+=guessedLetter}else{guessedLetters+=", "+guessedLetter}
         if(found>0){
@@ -260,7 +257,7 @@ class GuessPhrase : AppCompatActivity() {
         }
         else {
             disableEntry()
-            showAlert("You loss!\n\nPlay again?")
+            CustomAlert(this,"You loss!\n\nPlay again?")
         }
         updateText()
         // Scroll the Recycler View to the bottom each time a new message is added
@@ -281,27 +278,6 @@ class GuessPhrase : AppCompatActivity() {
         guessField.isClickable = false
     }
 
-    private fun showAlert(title: String){
-        // first we create a variable to hold an AlertDialog builder
-        val dialogBuilder = AlertDialog.Builder(this)
-
-        // here we set the message of our alert dialog
-        dialogBuilder.setMessage(title)
-            // positive button text and action
-            .setPositiveButton("Yes", DialogInterface.OnClickListener {
-                    dialog, id -> playGame()
-            })
-            // negative button text and action
-            .setNegativeButton("No", DialogInterface.OnClickListener {
-                    dialog, id -> dialog.cancel()
-            })
-        // create dialog box
-        val alert = dialogBuilder.create()
-        // set title for alert dialog box
-        alert.setTitle("Game over")
-        // show alert dialog
-        alert.show()
-    }
 
     private fun getHeightScore() : Int {
         sharedPreferences = this.getSharedPreferences(

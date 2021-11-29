@@ -1,6 +1,5 @@
 package com.example.a2in1app
 
-import android.content.DialogInterface
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -8,7 +7,6 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.Button
 import android.widget.EditText
-import androidx.appcompat.app.AlertDialog
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -96,6 +94,7 @@ class NumbersGame : AppCompatActivity() {
                     numberOfGuess--
                     if (userGuess.toInt() == randomNumber) {
                         messages.add("You got it!")
+                        CustomAlert(this, "You win!\n\nPlay again?")
                     }
                     else {
                         messages.add("You guessed $userGuess")
@@ -107,7 +106,7 @@ class NumbersGame : AppCompatActivity() {
                     messages.add("The Answer is: $randomNumber")
                     messages.add("Game over!")
 
-                    showAlert()
+                    CustomAlert(this, "Do you want to play again?")
                 }
             }
             else {
@@ -128,25 +127,4 @@ class NumbersGame : AppCompatActivity() {
         }
     }
 
-    private fun showAlert(){
-        // first we create a variable to hold an AlertDialog builder
-        val dialogBuilder = AlertDialog.Builder(this)
-
-        // here we set the message of our alert dialog
-        dialogBuilder.setMessage("Do you want to play again?")
-            // positive button text and action
-            .setPositiveButton("Yes", DialogInterface.OnClickListener {
-                    dialog, id -> startGame()
-            })
-            // negative button text and action
-            .setNegativeButton("No", DialogInterface.OnClickListener {
-                    dialog, id -> dialog.cancel()
-            })
-        // create dialog box
-        val alert = dialogBuilder.create()
-        // set title for alert dialog box
-        alert.setTitle("New Game")
-        // show alert dialog
-        alert.show()
-    }
 }

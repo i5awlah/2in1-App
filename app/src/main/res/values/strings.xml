@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Main Activity</string>
+    <string name="preference_file_key">com.example.guessThePhrase.PREFERENCE_FILE_KEY</string>
+</resources>
